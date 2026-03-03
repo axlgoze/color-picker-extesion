@@ -1,0 +1,42 @@
+# --- DEPENDENCIAS ---
+# Nunca subir las librerías; se instalan con 'npm install'
+node_modules/
+.pnp
+.pnp.js
+
+# --- CONSTRUCCIÓN / PRODUCCIÓN ---
+# Archivos que se generan al compilar (ej: npm run build)
+dist/
+build/
+.vercel
+.netlify
+
+# --- SEGURIDAD ---
+# Archivos con claves secretas, tokens o contraseñas
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- LOGS ---
+# Registros de errores de npm o librerías
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- SISTEMA ---
+# Archivos basura que crea Windows o macOS automáticamente
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- IDEs / EDITORES ---
+# Configuraciones personales de tu editor de código
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj

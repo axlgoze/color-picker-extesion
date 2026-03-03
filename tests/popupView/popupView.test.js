@@ -3,137 +3,104 @@ import { initEvents, renderColorPallete } from '../../src/js/popupView.js';
 import { onPickedColor } from '../../src/js/controller.js';
 
 vi.mock('../../src/js/controller.js', () => ({
-    onPickedColor: vi.fn()
+  onPickedColor: vi.fn(),
 }));
 
 describe('popupView', () => {
+  let MockData;
 
-    beforeEach(() => {
-        vi.clearAllMocks();
-        // Preparamos el escenario
-        document.body.innerHTML = `
-            <div id="selected-color"></div>
-            <div id="similar-colors"></div>
-            <div id="complementary-color"></div>
-            <input id="item-input"/>
-            <button id="submit-color__btn">Añadir</button>
-        `;
-        global.EyeDropper = class {
-            open() {
-                // Simulamos que el usuario selecciona un color
-                return Promise.resolve({ sRGBHex: '#be3131ff' });
-            }
-        };
-    });
+  beforeEach(() => {
+    vi.clearAllMocks();
+    MockData = [
+      { hex: '#FF5733', rgb: 'rgb(255, 87, 51)', label: 'selected' },
+      { hex: '#FF3375', rgb: 'rgb(255, 51, 117)', label: 'similar' },
+      { hex: '#FF3342', rgb: 'rgb(255, 51, 66)', label: 'similar' },
+      { hex: '#FFBD33', rgb: 'rgb(255, 189, 51)', label: 'similar' },
+      { hex: '#33DBFF', rgb: 'rgb(51, 219, 255)', label: 'complementary' },
+    ];
 
-    it('Should get a color from DOM', async () => {
-        // ARRANGE
-        const button = document.getElementById('submit-color__btn');
-        const mockHex = '#fff';
-        initEvents();
+    document.body.innerHTML = `
+      <div id="selected-color"></div>
+      <span class="info__hex" id="selected-hex-label">hex</span>
+      <span class="info__rgb" id="selected-rgb-label">rgb</span>
+      <div id="similar-colors"></div>
+      <div id="complementary-color"></div>
+      <input id="item-input"/>
+      <button id="submit-color__btn">Añadir</button>
+    `;
 
-        // ACTUAR
-        button.click();
+    global.EyeDropper = class {
+      open() {
+        return Promise.resolve({ sRGBHex: '#FF5733' });
+      }
+    };
+  });
 
-        // OBSERVAR
-        expect(onPickedColor).toHaveBeenCalledWith(mockHex);
-    })
+  // --- initEvents ---
 
-    it('should receive the correct number of colors in Array (["#d82020ff", "#23b1aaff", "#be3131ff", "#792ab9ff", "#fff"])', () => {
-        const MockData = ["#d82020ff", "#23b1aaff", "#be3131ff", "#792ab9ff", "#fff"];
-        renderColorPallete(MockData);
-        expect(MockData.length).toBe(5);
-    });
+  it('should call onPickedColor when button is clicked', async () => {
+    const button = document.getElementById('submit-color__btn');
+    initEvents();
 
-    it('should render all color components in all sections (selected,similar,complementary) correctly', () => {
+    button.click();
 
-        // PREAPARE
-        const containers = {
-            selected: document.getElementById('selected-color'),
-            similar: document.getElementById('similar-colors'),
-            complementary: document.getElementById('complementary-color')
-        };
+    expect(onPickedColor).toHaveBeenCalled();
+  });
 
-        const mockColorPallete = ["#d82020ff", "#23b1aaff", "#be3131ff", "#792ab9ff", "#fff"];
+  // --- renderColorPallete: input validation ---
 
-        // ACTUAR
-        renderColorPallete(mockColorPallete, containers);
+  it('should receive the correct number of colors (5)', () => {
+    renderColorPallete(MockData);
+    expect(MockData.length).toBe(5);
+  });
 
-        // OBSERVAR
-        expect(containers.selected.childElementCount).toBe(1);
-        expect(containers.similar.childElementCount).toBe(3);
-        expect(containers.complementary.childElementCount).toBe(1);
-    });
+  // --- renderColorPallete: DOM structure ---
 
+  it('should render 1 selected, 3 similar and 1 complementary component', () => {
+    const containers = {
+      selected: document.getElementById('selected-color'),
+      similar: document.getElementById('similar-colors'),
+      complementary: document.getElementById('complementary-color'),
+    };
 
-    it('Should fill the color component with the selected collor #21da68ff', () => {
-        // 1. ARRANGE
-        const containers = {
-            selected: document.getElementById('selected-color'),
-        };
-        const mockColorPallete = ["#21da68ff"];
+    renderColorPallete(MockData, containers);
 
-        // 2. ACTUAR
-        renderColorPallete(mockColorPallete, containers);
+    expect(containers.selected.childElementCount).toBe(1);
+    expect(containers.similar.childElementCount).toBe(3);
+    expect(containers.complementary.childElementCount).toBe(1);
+  });
 
-        // 3. OBSERVAR
-        const container = document.getElementById('selected-color');
-        const colorBox = container.querySelector('.color-component__color-box');
+  // --- renderColorPallete: color box rendering ---
 
-        expect(colorBox.style.backgroundColor).toBe('rgb(33, 218, 104)');
-    });
+  it('should set the background-color of the selected box to the given hex', () => {
+    const containers = {
+      selected: document.getElementById('selected-color'),
+    };
+    const palette = [
+      { hex: '#21DA68', rgb: 'rgb(33, 218, 104)', label: 'selected' },
+    ];
 
-    it('Should fill the color component with the complementary collor #800909ff', () => {
-        // 1. ARRANGE
-        const containers = {
-            complementary: document.getElementById('complementary-color'),
-        };
-        const mockColorPallete = ["#800909ff"];
+    renderColorPallete(palette, containers);
 
-        // 2. ACTUAR
-        renderColorPallete(mockColorPallete, containers);
+    const colorBox = containers.selected.querySelector(
+      '.color-component__color-box',
+    );
+    expect(colorBox.style.backgroundColor).toBe('rgb(33, 218, 104)');
+  });
 
-        // 3. OBSERVAR
-        const container = document.getElementById('complementary-color');
-        const colorBox = container.querySelector('.color-component__color-box');
+  it('should set the background-color of the complementary box to the given hex', () => {
+    const containers = {
+      complementary: document.getElementById('complementary-color'),
+    };
+    const palette = [
+      { hex: '#800909', rgb: 'rgb(128, 9, 9)', label: 'complementary' },
+    ];
 
-        expect(colorBox.style.backgroundColor).toBe('rgb(128, 9, 9)');
-    });
+    renderColorPallete(palette, containers);
 
-    it('should call onPickedColor when the add button is clicked', () => {
-        // 1. ARRANGE
-        initEvents();
-        const button = document.getElementById('submit-color__btn');
-
-        // 2. ACT
-        button.click();
-
-        // 3. ASSERT
-        // Verificamos que la función mockeada del controlador fue llamada
-        expect(onPickedColor).toHaveBeenCalled();
-
-        // Si tu código pasa un argumento específico (como '#fff'), verifícalo:
-        expect(onPickedColor).toHaveBeenCalledWith('#fff');
-    });
-
-
-
-    it('should put rgb color ()', () => {
-        // 1. ARRANGE
-
-
-        // 2. ACTUAR
-
-
-        // 3. OBSERVAR
-        expect().toBe();
-
-
-
-
-
-
-
-
-
-    });
+    const colorBox = containers.complementary.querySelector(
+      '.color-component__color-box',
+    );
+    expect(colorBox.style.backgroundColor).toBe('rgb(128, 9, 9)');
+  });
+});

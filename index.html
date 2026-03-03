@@ -1,85 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <main class="color-picker">
-
-        <section class="selected-color" id="selected-color">
-
-            <!-- <div class="color-component">
+      <section class="selected-color" id="selected-color">
+        <!-- <div class="color-component">
                 <div class="color-component__color-box"></div>
                 <span class="color-component__color-format color-component__color-format--hidden">rgb</span>
             </div> -->
 
-            <div class="selected-color__info">
-                <span class="info__title">Selected Color</span>
-                <span class="info__hex">hex</span>
-                <span class="info__rgb">rgb</span>
-            </div>
-        </section>
+        <div class="selected-color__info">
+          <span class="info__title">Selected Color</span>
+          <span class="info__hex" id="selected-hex-label">hex</span>
+          <span class="info__rgb" id="selected-rgb-label">rgb</span>
+        </div>
+      </section>
 
-        <section class="color-pallete">
-            <div class="similar">
-                <span class="similar__title">Similar Colors</span>
+      <section class="color-pallete">
+        <div class="similar">
+          <span class="similar__title">Similar Colors</span>
 
-                <div class="color-component__grid" id="similar-colors">
-
-                    <!-- <div class="color-component">
+          <div class="color-component__grid" id="similar-colors">
+            <!-- <div class="color-component">
                         <div class="color-component__color-box" id="info">
                         </div>
-                        <span class="color-component__color-format">hex</span>
+                        <span class="color-component__color-format" id="rgb-label">rgb</span>
                     </div>
 
-                    <div class="color-component">
-                        <div class="color-component__color-box">
-                        </div>
-                        <span class="color-component__color-format">hex</span>
-                    </div>
+                    <... -->
+          </div>
+        </div>
 
-                    <div class="color-component">
-                        <div class="color-component__color-box">
-                        </div>
-                        <span class="color-component__color-format">hex</span>
-                    </div> -->
+        <div class="complementary">
+          <span class="complementary__title">Complementary Color</span>
+          <div class="color-component__grid" id="complementary-color"></div>
+        </div>
+      </section>
 
-                </div>
-            </div>
+      <section class="submit-color">
+        <button class="submit-color__btn">Pick a New Color</button>
+      </section>
 
-            <div class="complementary">
-                <span class="complementary__title">Complementary Color</span>
-
-                <div class="color-component__grid" id="complementary-color">
-
-                    <!-- <div class="color-component">
-                        <div class="color-component__color-box">
-                        </div>
-                        <span class="color-component__color-format">hex</span>
-                    </div> -->
-
-                </div>
-
-
-            </div>
-        </section>
-
-        <section class="submit-color">
-            <button class="submit-color__btn">Pick a New Color</button>
-        </section>
-
-
-        <!-- Footer: Action Button -->
-        <footer class="footer">
-            <span>developed by AXL</span>
-        </footer>
+      <!-- Footer: Action Button -->
+      <footer class="footer">
+        <span>developed by AXL</span>
+      </footer>
     </main>
     <script src="main.js"></script>
-</body>
-
+  </body>
 </html>

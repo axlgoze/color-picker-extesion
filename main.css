@@ -1,18 +1,226 @@
 /* =========================================
-   1. Reset
+   1. Variables y Reset
    ========================================= */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --color-bg: #1a3636;
+  --color-surface: #40534c;
+  --color-accent: #677d6a;
+  --color-text-main: #d6bd98;
+  --color-white: #e2f1e7;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    min-height: 100vh;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #232323;
-    color: white;
-    display: flex;
-    flex-direction: column; /* Alineación vertical para el main */
-    align-items: center;
+  background-color: var(--color-bg);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* =========================================
+   2. Contenedor Principal
+   ========================================= */
+.color-picker {
+  background-color: var(--color-surface);
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem;
+  border-radius: 30px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-accent);
+}
+
+/* =========================================
+   3. Color Seleccionado
+   ========================================= */
+.selected-color {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 1.3rem;
+  background: rgba(26, 54, 54, 0.3);
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.color-component__color-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  background-color: var(--color-text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--color-white);
+  transition: transform 0.3s ease;
+}
+
+.selected-color__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info__hex {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.info__rgb {
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+/* =========================================
+   4. Paleta de Colores (Grid)
+   ========================================= */
+.similar__title,
+.complementary__title,
+.selected-color__title {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-weight: bold;
+  color: var(--color-text-main);
+}
+
+.color-component__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  gap: 11px;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+/* 3. Posicionamiento específico para el Complementario */
+/* Como solo hay un hijo, le decimos en qué columna de la rejilla debe vivir */
+.complementary .color-component__grid .color-component {
+  grid-column: 2;
+  /* Se alinea justo en el centro (bajo el segundo cuadro de arriba) */
+  /* Si lo quieres a la izquierda usa 1, a la derecha usa 3 */
+}
+
+/* 4. Ajustes de los componentes individuales */
+.color-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centra el texto 'hex' bajo el cuadro */
+}
+
+.color-component__color-box {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 7px;
+  border-radius: 8px;
+  /* Opcional, para suavizar */
+}
+
+.color-component__color-format {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.color-component__color-format {
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.color-component__color-format--hidden {
+  display: none;
+}
+
+/* =========================================
+   5. Botón y Footer
+   ========================================= */
+.submit-color__btn {
+  width: 100%;
+  padding: 18px;
+  margin-top: 7px;
+  border-radius: 15px;
+  border: none;
+  background-color: var(--color-text-main);
+  color: var(--color-bg);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-color__btn:hover {
+  background-color: var(--color-white);
+  transform: translateY(-3px);
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.7rem;
+  opacity: 0.4;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* =========================================
+   6. Responsive (Media Queries)
+   ========================================= */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .color-picker {
+    max-width: 400px;
+    padding: 2rem;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  body {
+    align-items: flex-start;
+    /* Para que no se corte arriba si es pequeña la pantalla */
+    padding-top: 40px;
+  }
+
+  .color-picker {
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+
+  .selected-color {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .color-component__color-box {
+    width: 100%;
+    /* El cuadro principal se vuelve ancho completo */
+    height: 120px;
+  }
+
+  .selected-color__hex {
+    font-size: 1.5rem;
+  }
+
+  .similar {
+    grid-template-columns: 1fr 1fr 1fr;
+    /* Mantenemos 3 columnas pero más pequeñas */
+  }
 }
