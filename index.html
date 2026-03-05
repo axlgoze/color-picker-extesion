@@ -4,17 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="main.css" />
-    <title>Document</title>
+    <title>Color Picker Extension</title>
   </head>
 
   <body>
     <main class="color-picker">
-      <section class="selected-color" id="selected-color">
-        <!-- <div class="color-component">
-                <div class="color-component__color-box"></div>
-                <span class="color-component__color-format color-component__color-format--hidden">rgb</span>
-            </div> -->
-
+      <section class="selected-color">
+        <div id="selected-color"></div>
         <div class="selected-color__info">
           <span class="info__title">Selected Color</span>
           <span class="info__hex" id="selected-hex-label">hex</span>
@@ -24,17 +20,9 @@
 
       <section class="color-pallete">
         <div class="similar">
-          <span class="similar__title">Similar Colors</span>
+          <span class="similar__title">Analogous Colors</span>
 
-          <div class="color-component__grid" id="similar-colors">
-            <!-- <div class="color-component">
-                        <div class="color-component__color-box" id="info">
-                        </div>
-                        <span class="color-component__color-format" id="rgb-label">rgb</span>
-                    </div>
-
-                    <... -->
-          </div>
+          <div class="color-component__grid" id="similar-colors"></div>
         </div>
 
         <div class="complementary">
@@ -44,14 +32,15 @@
       </section>
 
       <section class="submit-color">
-        <button class="submit-color__btn">Pick a New Color</button>
+        <button id="submit-color__btn" class="submit-color__btn">
+          Pick a New Color
+        </button>
       </section>
 
-      <!-- Footer: Action Button -->
       <footer class="footer">
         <span>developed by AXL</span>
       </footer>
     </main>
-    <script src="main.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
