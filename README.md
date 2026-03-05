@@ -10,6 +10,8 @@ A Chrome Extension that lets designers and developers **pick any color from the 
 
 > Load unpacked from the `dist/` folder — see [Installation](#installation).
 
+![Module Mermaid Diagram](./assets/extinAction.png)
+
 ---
 
 ## Features
@@ -53,10 +55,6 @@ graph LR
 ### Class / Function Map
 
 ![Architecture Diagram](./assets/diagramaDeClases.png)
-
-### Module Interaction
-
-![Module Mermaid Diagram](./assets/mermaid.png)
 
 ---
 

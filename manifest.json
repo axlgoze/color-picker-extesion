@@ -5,7 +5,8 @@
   "description": "Pick any color from the screen and get its complementary and analogous palette.",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Color Picker"
+    "default_title": "Color Picker",
+    "default_icon": "assets/icon-128.png"
   },
   "permissions": ["activeTab", "storage"]
 }
