@@ -216,6 +216,10 @@ npm test
 
 ---
 
+📚 **Docs:** [Project Wiki](https://github.com/axlgoze/color-picker-extesion/wiki)
+
+---
+
 ### About
 
 Built by **AXL** · [LinkedIn](https://www.linkedin.com/in/axel-reyes-wd/)
